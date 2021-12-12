@@ -21,7 +21,7 @@ hack = Statistics("Daily Hacker News")
 aqiStats = aqi.get_AQI()
 forecast = weather.get_weather()
 # almanac = alm.get_almanac()
-# news = hack.get_news()
+news = hack.get_news()
 
 
 
@@ -32,6 +32,10 @@ for i in range(3):
     master.columnconfigure(i, weight=1)
 
 bgImage = ImageTk.PhotoImage(file="./images/webback.jpg")
+qr = PhotoImage(file="./images/article.png", )
+qr = qr.zoom(25)
+qr = qr.subsample(32)
+
 
 # Define 4 seperate canvases
 canvas1 = Canvas(master, width=width/2, height=height/2, relief='raised')
@@ -67,12 +71,12 @@ desc2    = Label(canvas2, text=f"Reporting Area: { forecast['name']}\nTemp: {for
 headBl   = canvas3.create_rectangle(0, 50, width, 0,  fill="white") 
 bgLabel3 = Label(canvas3, bg="green",width=45, height=17).place(relx=0.5,rely=0.2, anchor="n")
 title3   = Label(canvas3, text=aqi.name, font=("Helvetica",20),bg="white", fg="black").place(relx=0.5, rely=0.03, anchor='n') # top text
-desc3    = Label(canvas3, text=f"Reporting Area: { aqiStats['Area']}\nCategory: {aqiStats['Category']}\nAQI: { aqiStats['Quality']}" , font=("Helvetica",20), foreground="black", bg=aqiStats['Bg']).place(relx=0.5, rely=0.3, anchor='n') # top text
-
+desc3    = Label(canvas3, text=f"Title: {news['Title']}" , font=("Helvetica",20), foreground="black", bg=aqiStats['Bg']).place(relx=0.5, rely=0.3, anchor='n') # top text
+title3   = Label(canvas3,image=qr).place(relx=0.5, rely=0.5, anchor='n') # top text
 #bottom right
 headBr   = canvas4.create_rectangle(0, 50, width, 0,  fill="white") 
 bgLabel4 = Label(canvas4, bg="green",width=45, height=17).place(relx=0.5,rely=0.2, anchor="n")
-title4   = Label(canvas4, text=aqi.name, font=("Helvetica",20),bg="white", fg="black").place(relx=0.5, rely=0.03, anchor='n') # top text
+title4   = Label(canvas4, text=aqi.name, font=("Helvetica",20),bg="white", fg="black").place(relx=0.5, rely=0.7, anchor='n') # top text
 desc4    = Label(canvas4, text=f"Reporting Area: { aqiStats['Area']}\nCategory: {aqiStats['Category']}\nAQI: { aqiStats['Quality']}" , font=("Helvetica",20), foreground="black", bg=aqiStats['Bg']).place(relx=0.5, rely=0.3, anchor='n') # top text
 
 

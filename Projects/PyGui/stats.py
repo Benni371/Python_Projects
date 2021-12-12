@@ -1,12 +1,21 @@
 from datetime import date
-from tkinter.constants import S
 import requests
 from requests import api
+from requests.models import requote_uri
 from decouple import config
+from bs4 import BeautifulSoup
+import datetime
+import pyqrcode
+import png
+from pyqrcode import QRCode
+
+
 
 class Statistics:
     date = date.today().strftime("%Y%m%d")
+    now = datetime.datetime.now()
     area = 84606
+    content = ''
     def __init__(self, name):
         self.name = name
         self.aqi_key = config('aqi_key')
@@ -41,9 +50,29 @@ class Statistics:
             response = "Error..."
     def get_news(self):
         #web scrape first article from hacker news .com
+        article = ''
+        response = requests.get('https://news.ycombinator.com/')
+        content = response.content
+        soup = BeautifulSoup(content,'html.parser')
+        tag = soup.find('a',attrs={"class":"titlelink"})
+        tag = str(tag)
+        parsed = tag.split('"')
+        link = parsed[3]
+        parsed = tag.split('>')
+        title = parsed[-2].split("<")
+        title = title[0]
+        # Generate QR code
+        url = pyqrcode.create(link)
+  
+        # Create and save the png file naming "myqr.png"
+        qr = url.png('./images/article.png', scale = 6)
 
-        #get article link and put it into a qr code
-        pass
+        news = {
+            "Image": qr,
+            "Title": title
+        }
+        return(news)
+        
     def get_weather(self):
         #use weather api
         url = "https://community-open-weather-map.p.rapidapi.com/weather"
