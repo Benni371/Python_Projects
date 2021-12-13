@@ -93,8 +93,16 @@ class Statistics:
         return(weather)
 
 
-    def get_almanac():
-        #use 
-        pass
+    def get_joke(self):
+        # use icanhazdadjoke.com's api. Its free and super funny
+        url = 'https://icanhazdadjoke.com'
+        headers = {
+            "Accept": "application/json"
+            }
+        response = requests.request("GET", url, headers=headers)
+        joke = response.json()
+        joke = joke['joke']
+        
+        return(joke)
             
 
