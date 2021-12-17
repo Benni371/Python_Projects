@@ -11,7 +11,7 @@ import smtplib, ssl
 def get_news():
     #web scrape first article from hacker news .com
     article = ''
-    response = requests.get('https://news.ycombinator.com/')
+    response = requests.get('https://news.ycombinator.com/news')
     content = response.content
     soup = BeautifulSoup(content,'html.parser')
     tag = soup.find('a',attrs={"class":"titlelink"})
