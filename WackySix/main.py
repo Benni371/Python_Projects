@@ -13,9 +13,9 @@ def displayOptions(players):
             case "2":
                 player = input("Which players score needs to be adjusted? ")
                 index = int(input("Which round was it? "))
-                adjustment = int(input("How much needs to be subtracted (enter negative #) or added (enter positive number)?"))
+                adjustment = int(input("How much needs to be subtracted (enter negative #) or added (enter positive number)? "))
                 for i in range(0,len(players)):
-                    if players[i].name == player:
+                    if players[i].name.lower() == player.lower():
                         players[i].editScore(adjustment,index)
                         print("Updated!")
                         break
@@ -47,6 +47,9 @@ def displayOptions(players):
                 time.sleep(1)
                 displayWinner(players)
                 exit()
+            case _:
+                print("Invalid choice. Please try again.")
+                displayOptions(players)
                     
                 
                 
@@ -60,10 +63,9 @@ def playGame(players):
     objs = []
     objs.sort
     for obj in range(players):
-        name = input("Enter players name: (For easier to read scores, keep names 4-5 characters) ")
+        name = input("Enter players name (For easier to read scores, keep names 4-5 characters): ")
         obj = Player(name)
         objs.append(obj)
-    round = 1
     # Provide options for score keeping
     while(True):
         displayOptions(objs)
@@ -71,5 +73,10 @@ def playGame(players):
         
 
 if __name__ == "__main__":
+    print("\n\n")
+    print("########################################")
+    print("#      Wacky Six Score Calculator      #")
+    print("########################################\n\n")
+
     players = int(input("How many people are playing? "))
     playGame(players)
